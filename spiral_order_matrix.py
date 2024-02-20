@@ -32,4 +32,4 @@ matrix = [[1, 2, 3], [8, 9, 4], [7, 6, 5]]
 print(spiralOrder(matrix))
 
 # O(m * n) time
-# O(1) space
+# O(1) space, as we do not count the output array.
