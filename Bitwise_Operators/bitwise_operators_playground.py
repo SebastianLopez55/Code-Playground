@@ -28,11 +28,16 @@ print(7 ^ 0 == 7)
 
 print("== TESTING THE 'NOT' OPERATOR ==")
 print(0b0101 == 5)
+inverted = 5 ^ 0b1111
+print("Binary 5 Inverted: ", bin(inverted))
+print("Two's Complement (Negative Representation: ", bin(inverted + 1))
 
-# Manual Two's Complement of Decimal 5
-print(bin((5 ^ 0b1111) + 1))
-
-# Using NOT to get Two's complement
 print(bin(~5))
+print(~5)
 
-print("== LEVERAGING BITWISE OPERATORS ==")
+print(bin(~13))
+print(~13)
+
+print("== Left and Right Shift ==")
+print(bin(0b1010 << 1) == str(bin(0b10100)))
+print(bin(0b1010 >> 1) == str(bin(0b0101)))
