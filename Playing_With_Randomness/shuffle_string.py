@@ -14,8 +14,20 @@ def shuffle_stg(s: str) -> str:
     return "".join(arr)
 
 
-s = "hope"
-print(shuffle_stg(s))
-
 # O(n) time
 # O(1) space
+
+
+# TEST: Are the letter truly random?
+def test_shuffle_stg1(s: str, num_shuffles: int):
+    pos_counts = {char: [0] * len(s) for char in s}
+    for _ in range(num_shuffles):
+        shuffled = shuffle_stg(s)
+        for i, char in enumerate(shuffled):
+            pos_counts[char][i] += 1
+    return pos_counts
+
+
+s = "hope"
+print(shuffle_stg(s))
+print(test_shuffle_stg1(s, 1000000))
