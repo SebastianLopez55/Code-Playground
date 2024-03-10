@@ -9,3 +9,5 @@ def sum_of_digits(n):
 
 n = 1234
 print(sum_of_digits(n))
+n2 = 12
+print(sum_of_digits(n2))
