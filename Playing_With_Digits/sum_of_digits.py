@@ -31,5 +31,8 @@ def sum_squares_digits(n: int) -> int:
     return sums
 
 
-n = 9
-print(sum_squares_digits(n))
+n = 99999
+res = sum_squares_digits(n)
+print(res)
+# After certain point (when reach numbers with 4 digits), the sum of squares will always be smaller.
+print(n > res)
