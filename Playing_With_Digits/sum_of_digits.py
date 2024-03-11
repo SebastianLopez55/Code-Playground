@@ -21,7 +21,15 @@ def sum_of_digits(n):
 # O(log n) time
 # O(1) space
 
-n = 1234
-print(sum_of_digits(n))
-n2 = 12
-print(sum_of_digits(n2))
+
+def sum_squares_digits(n: int) -> int:
+    sums = 0
+    while n > 0:
+        last_digit = n % 10
+        sums += last_digit**2
+        n = n // 10
+    return sums
+
+
+n = 9
+print(sum_squares_digits(n))
