@@ -28,6 +28,6 @@ def test_shuffle_stg1(s: str, num_shuffles: int):
     return pos_counts
 
 
-s = "hope"
+s = "Hope you make it!"
 print(shuffle_stg(s))
-print(test_shuffle_stg1(s, 1000000))
+print(test_shuffle_stg1(s, 10000))
