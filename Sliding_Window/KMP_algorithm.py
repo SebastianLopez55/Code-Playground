@@ -43,6 +43,9 @@ def occurrence_in_string(text: str, word: str):
             return i - len(word)
     return -1
 
+    # O(n + m) time
+    # O(m) space
+
 
 # TESTING
 def test_longest_prefix_suffix():
