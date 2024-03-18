@@ -1,6 +1,6 @@
 def longestSubstring(s: str) -> int:
     window = dict()  # char : index
-    longest = ""
+    start, end = 0, 0
 
     L = 0
     for R in range(len(s)):
@@ -11,10 +11,10 @@ def longestSubstring(s: str) -> int:
             if L < new_idx:
                 L = new_idx
         window[curr_char] = R
-        if (R - L + 1) > len(longest):
-            longest = s[L : R + 1]
+        if (R - L + 1) > (end - start):
+            start, end = L, R + 1
         # longest = max(longest, R - L + 1)
-    return longest
+    return s[start:end]
 
 
 # O(n) time
