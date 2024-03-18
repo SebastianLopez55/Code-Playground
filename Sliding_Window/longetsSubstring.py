@@ -20,9 +20,9 @@ def longestSubstring(s: str) -> int:
 # O(n) time
 # O(min(m, n)) space. m := size of alphabet and n := size of string
 
+# TESTING
 assert longestSubstring("abcabcbb") == "abc"
 assert longestSubstring("bbbbb") == "b"
 assert longestSubstring("pwwkew") == "wke"
 assert longestSubstring("12345%#@! snfugh") == "12345%#@! snfugh"
-
 print(" All tests passed!! ")
