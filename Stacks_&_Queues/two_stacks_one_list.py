@@ -67,10 +67,13 @@ print(f"Popped from Stack 1: {popped_value1}")
 print(f"Stacks after pop1(): {two_stacks.stacks}")
 
 
-try:
-    assert two_stacks.stacks == [4, 1212, 2, 2, 3, -3], "Test Fails"
+def test1_TwoStacks():
+    try:
+        assert two_stacks.stacks == [4, 1212, 2, 2, 3, -3], "Test Fails"
+    except AssertionError as e:
+        print(f"AssertionError failed: {e} ")
+    else:
+        print("Test 1 passed")
 
-except AssertionError as e:
-    print("ERROR:", e)
-else:
-    print("Test 1 passed")
+
+test1_TwoStacks()
