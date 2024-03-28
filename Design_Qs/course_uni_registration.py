@@ -47,38 +47,6 @@ class CourseRegistrationSystem:
         return paired_students_list if paired_students_list else "[]"
 
 
-# Function to process queries
-def process_queries(queries):
-    system = CourseRegistrationSystem()
-    results = []
-    for query in queries:
-        operation = query[0]
-        if operation == "CREATE_COURSE":
-            _, course_id, name, credits = query
-            result = system.create_course(course_id, name, credits)
-        elif operation == "REGISTER_FOR_COURSE":
-            _, student_id, course_id = query
-            result = system.register_for_course(student_id, course_id)
-        results.append(result)
-    return results
-
-
-# Example usage
-queries = [
-    ["CREATE_COURSE", "CSE220", "System Programming", "3"],
-    ["CREATE_COURSE", "CSE221", "System Programming", "3"],
-    ["CREATE_COURSE", "CSE300", "Computer Architecture", "4"],
-    ["CREATE_COURSE", "CSE330", "Introduction to Algorithms", "4"],
-    ["REGISTER_FOR_COURSE", "s001", "CSE220"],
-    ["REGISTER_FOR_COURSE", "s001", "CSE220"],
-    ["REGISTER_FOR_COURSE", "s001", "CSE300"],
-    ["REGISTER_FOR_COURSE", "s001", "CSE330"],
-]
-
-output = process_queries(queries)
-print(output)
-
-
 # The process_queries function needs to be extended to handle the new operation.
 def process_queries(queries):
     system = CourseRegistrationSystem()
