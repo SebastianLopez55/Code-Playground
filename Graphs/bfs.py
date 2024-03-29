@@ -1,18 +1,7 @@
 from Graph import Graph
 from Queue import MyQueue
 
-# You can check the input graph in console tab
-
-# Create Queue => queue = MyQueue()
-# Functions of Queue => enqueue(int), dequeue(), size(), front(), is_empty()
-# Create Stack => stack = MyStack()
-# Functions of Stack => push(int), pop(), top(), is_empty()
-# Create Graph => graph = Graph(vertices)
-# Create LinkedList => link_list = LinkedList()
-# Functions of LinkedList => insert_at_head(Node), is_empty(), delete(),
-#                            delete_at_head(list), search(), print_list()
-# class Node => data, next_element
-# Breadth First Traversal of Graph g from source vertex
+# This implementation of bfs also works for graphs with disconnected components.
 
 
 def bfs_traversal_helper(g, source, visited):
@@ -55,3 +44,37 @@ def bfs_traversal(g, source):
             result += result_new
 
     return result
+
+
+# Test cases
+
+# Create the graph
+graph = Graph(4)
+graph.add_edge(0, 1)
+graph.add_edge(0, 2)
+graph.add_edge(1, 2)
+graph.add_edge(2, 0)
+graph.add_edge(2, 3)
+graph.add_edge(3, 3)
+
+# Expected Output: "0 1 2 3" (or any other order that correctly represents BFS traversal from vertex 0)
+print(bfs_traversal(graph, 0))
+
+
+# Create the graph
+graph = Graph(6)
+graph.add_edge(0, 1)
+graph.add_edge(1, 2)
+graph.add_edge(2, 0)
+graph.add_edge(3, 4)
+graph.add_edge(4, 5)
+
+# Expected Output: "0 1 2 3 4 5" (starting from vertex 0, then jumping to new components as necessary)
+print(bfs_traversal(graph, 0))
+
+
+# Create the graph
+graph = Graph(3)  # 3 vertices, but no edges added
+
+# Expected Output: "0 1 2" (each vertex by itself, since there are no edges)
+print(bfs_traversal(graph, 0))
