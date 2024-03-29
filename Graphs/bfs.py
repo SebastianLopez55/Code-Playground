@@ -46,7 +46,7 @@ def bfs_traversal(g, source):
     return result
 
 
-# Test cases
+# TEST CASES
 
 # Create the graph
 graph = Graph(4)
@@ -57,7 +57,7 @@ graph.add_edge(2, 0)
 graph.add_edge(2, 3)
 graph.add_edge(3, 3)
 
-# Expected Output: "0 1 2 3" (or any other order that correctly represents BFS traversal from vertex 0)
+# Expected Output: "0 2 1 3" (or any other order that correctly represents BFS traversal from vertex 0)
 print(bfs_traversal(graph, 0))
 
 
