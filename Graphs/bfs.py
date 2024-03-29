@@ -9,19 +9,21 @@ def bfs_traversal_helper(g, source, visited):
     q = MyQueue()
     result = ""
 
+    # Mark source as visited and enqueue
     visited.add(source)
     q.enqueue(source)
-    while not q.is_empty():
 
+    # Main BFS loop
+    while not q.is_empty():
         curr_node = q.dequeue()
         result += str(curr_node)
         neighbor = g.array[curr_node].head_node
-        while neighbor is not None:
 
+        # Add curr_node's children to queue() and mark it as visited.
+        while neighbor is not None:
             if neighbor.data not in visited:
                 q.enqueue(neighbor.data)
                 visited.add(neighbor.data)
-
             neighbor = neighbor.next_element
 
     return result, visited
