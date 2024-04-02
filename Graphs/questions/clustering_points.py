@@ -45,9 +45,11 @@ def make_graph(points, d):
     """
     graph = dict()
 
+    # Initialize graph structure.
     for point in points:
         graph[point] = []
 
+    # Populate graphs structure with the given parameters.
     for point1 in points:
         for point2 in points:
             if point1 != point2 and distance(point1, point2) < d:
