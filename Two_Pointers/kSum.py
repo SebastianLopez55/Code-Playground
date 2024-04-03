@@ -4,7 +4,7 @@ class Solution:
         return self.kSum(4, nums, target)
 
     # Solve "twoSum II"
-    def twoSum(self, k, start, target, nums, q_plets, curr_kSum):
+    def twoSum(self, k, start, target, nums, two_plets, curr_kSum):
         l, r = start, len(nums) - 1
         while l < r:
             current_sum = nums[l] + nums[r]
@@ -13,7 +13,7 @@ class Solution:
             elif current_sum > target:
                 r -= 1
             else:
-                q_plets.append(curr_kSum + [nums[l], nums[r]])
+                two_plets.append(curr_kSum + [nums[l], nums[r]])
                 l += 1
                 while l < r and nums[l] == nums[l - 1]:
                     l += 1
@@ -21,12 +21,12 @@ class Solution:
     # Solve kSum, generic approach.
     def kSum(self, k, nums, target):
         nums.sort()
-        q_plets, curr_kSum = [], []
+        k_plets, curr_kSum = [], []
 
         def kSum_helper(k, start, target):
             # Base case: two sum II
             if k == 2:
-                return self.twoSum(k, start, target, nums, q_plets, curr_kSum)
+                return self.twoSum(k, start, target, nums, k_plets, curr_kSum)
 
             # Recursive case for k > 2
             for i in range(start, len(nums) - k + 1):
@@ -38,7 +38,7 @@ class Solution:
                 curr_kSum.pop()
 
         kSum_helper(k, 0, target)
-        return q_plets
+        return k_plets
 
     # O(n^k-1) time
     # O(n) space
