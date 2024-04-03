@@ -48,7 +48,6 @@ class Solution:
 nums = [1, 0, -1, 0, -2, 2]
 target = 0
 
-
 s1 = Solution()
 assert s1.kSum(2, nums, target) == [[-2, 2], [-1, 1], [0, 0]], "failed 2Sum test one."
 assert s1.kSum(3, nums, target) == [[-2, 0, 2], [-1, 0, 1]], "failed 3Sum test one."
