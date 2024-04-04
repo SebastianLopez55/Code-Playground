@@ -51,16 +51,33 @@ def bfs_traversal(g, source):
     return all_traversed
 
 
-g = Graph(4)
-num_of_vertices = g.vertices
-if num_of_vertices is 0:
-    print("Graph is empty")
-elif num_of_vertices < 0:
-    print("Graph cannot have negative vertices")
-else:
-    g.add_edge(0, 1)
-    g.add_edge(0, 2)
-    g.add_edge(1, 3)
-    g.add_edge(2, 3)
-    print(bfs_traversal(g, 0))
-    assert bfs_traversal(g, 0) == "0213"
+def test_bfs():
+    # Test Case 1: Simple Connected Graph
+    g1 = Graph(4)
+    g1.add_edge(0, 1)
+    g1.add_edge(0, 2)
+    g1.add_edge(1, 3)
+    g1.add_edge(2, 3)
+    print("Output:", bfs_traversal(g1, 0))
+    assert bfs_traversal(g1, 0) == "0213", "Test Case 1 Failed"
+
+    # Test Case 2: Graph with Disconnected Components
+    g2 = Graph(5)  # Adding an extra vertex to introduce a disconnected component
+    g2.add_edge(0, 1)
+    g2.add_edge(0, 2)
+    g2.add_edge(1, 3)
+    g2.add_edge(2, 3)
+    # Assuming bfs_traversal modifies its behavior for disconnected components
+    print("Output:", bfs_traversal(g2, 0))
+    assert bfs_traversal(g2, 0) == "02134", "Test Case 2 Failed"
+
+    # Test Case 3: An Empty Graph
+    g3 = Graph(0)
+    print("Output:", None if bfs_traversal(g3, 0) == "" else bfs_traversal(g3, 0))
+    assert bfs_traversal(g3, 0) == "", "Test Case 3 Failed"
+
+    print("\nAll test cases passed!")
+
+
+# Assuming we're calling the test function to execute tests
+test_bfs()
