@@ -1,12 +1,4 @@
-s1 = set([1, 2, 3])
-s2 = set([4, 5, 6])
-stack = [1]
+graph = {0: [1, 2, 3], 1: [4], 2: [], 3: [], 4: [5], 5: [6], 6: []}
 
-stack.append(2)
-print(stack)
-stack.pop()
-print(stack)
-
-print(s1)
-
-print(0 % 2)
+print(len(graph.keys()))
+print(len(graph))
