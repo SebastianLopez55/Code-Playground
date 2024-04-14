@@ -23,9 +23,8 @@ def cycle_detection(graph):
         return False
 
     for node in graph:
-        if node not in visited:
-            if dfs(node):
-                return True
+        if dfs(node):
+            return True
 
     return False
 
