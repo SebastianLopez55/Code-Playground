@@ -17,7 +17,8 @@ def dfs_recursive(graph):
             dfs_helper_rec(graph, node)
 
 
-# dfs_recursive(graph)
+print("dfs recursive:")
+dfs_recursive(graph)
 
 
 def dfs_iterative(graph):
@@ -41,4 +42,5 @@ def dfs_iterative(graph):
             dfs_helper_iter(source)
 
 
+print("dfs iterative:")
 dfs_iterative(graph)
