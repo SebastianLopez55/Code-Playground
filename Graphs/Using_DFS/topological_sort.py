@@ -42,19 +42,37 @@ def dfs(graph):
     return preorder, postorder
 
 
+def topological_sort(graph):
+    visited = set()
+    stack = []
+
+    def explore(node):
+        visited.add(node)
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                explore(neighbor)
+
+        stack.append(node)
+
+    for source in graph:
+        if source not in visited:
+            explore(source)
+
+    return stack
+
+
 pre, post = dfs(graph)
 for node in graph:
     print(f"\nNode {node} traversal label [{pre[node]}, {post[node]}]")
 print()
 
-# Toposort
-post_map = {}
-for i, post_num in enumerate(post):
-    post_map[post_num] = i
-sorted_keys = sorted(post_map.keys(), reverse=True)
 
-toposort = []
-for key in sorted_keys:
-    toposort.append(post_map[key])
-
-print(f"Topological sort starting from source: {toposort}")
+print("== Topological Sort == \n")
+top_sort_stack = topological_sort(graph)
+while top_sort_stack:
+    current_node = top_sort_stack.pop()
+    if top_sort_stack:
+        print(f"{current_node} -> ", end="")
+    else:
+        print(f"{current_node}")
