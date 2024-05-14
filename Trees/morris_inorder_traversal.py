@@ -30,7 +30,11 @@ def morris_inorder(root):
     current = root
     while current:
         if current.left is None:
+
+            # ======= Process Node ======
             print(current.val)
+            # ===== Process Finished ====
+
             current = current.right
         else:
             # Find inorder predecessor of current.
@@ -45,7 +49,11 @@ def morris_inorder(root):
             else:
                 # Revert changes made in tree.
                 pre.right = None
+
+                # ======= Process Node ======
                 print(current.val)
+                # ===== Process Finished ====
+
                 current = current.right
 
     # O(n) time.
