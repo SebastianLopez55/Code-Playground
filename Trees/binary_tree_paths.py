@@ -20,7 +20,8 @@ class Solution:
             path.append(str(node.val))
 
             if not node.left and not node.right:  # if reach a leaf
-                paths.append("->".join(path))  # add path to result
+                curr_path = "->".join(path)
+                paths.append(curr_path)  # add path to result
             else:
                 dfs(node.left, path)
                 dfs(node.right, path)
@@ -58,11 +59,13 @@ root.left = TreeNode(2)
 root.right = TreeNode(3)
 root.left.right = TreeNode(5)
 
+root2 = TreeNode(1)
+
 # Instantiate the solution class
 solution = Solution()
 
 # Test the functions
-paths1 = solution.binaryTreePaths1(root)
+paths1 = solution.binaryTreePaths1(root2)
 paths2 = solution.binaryTreePaths2(root)
 
 print("Paths from binaryTreePaths1:", paths1)
