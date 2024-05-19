@@ -11,3 +11,5 @@ print(n3)  # 2
 
 n4 = num // 10
 print(n4)  # 23
+
+print(str(num)[0])
