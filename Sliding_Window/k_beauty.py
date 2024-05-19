@@ -12,7 +12,7 @@ class Solution:
         num_copy = num
         num_digits = number_of_digits(num)
 
-        while num_digits > 0:
+        while num_digits >= k:
             # Get the first k digits of num.
             first_k = num_copy // (10 ** (num_digits - k))
 
@@ -29,6 +29,6 @@ class Solution:
 
 # Test cases
 solution = Solution()
-# print(solution.divisorSubstrings(240, 2))  # Expected: 2
-# print(solution.divisorSubstrings(430043, 2))  # Expected: 2
+print(solution.divisorSubstrings(240, 2))  # Expected: 2
+print(solution.divisorSubstrings(430043, 2))  # Expected: 2
 print(solution.divisorSubstrings(81, 2))  # Expected: 1
