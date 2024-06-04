@@ -10,7 +10,7 @@ class TreeNode:
 
 
 def find_kth_max(root: Optional[TreeNode], k: int) -> int:
-    def reverse_inorder_traversal(
+    def find_kth_largest_recursive(
         node: Optional[TreeNode], k: int
     ) -> Tuple[int, Optional[int]]:
         # Base case: if the node is None, return count as 0 and value as None
@@ -18,7 +18,7 @@ def find_kth_max(root: Optional[TreeNode], k: int) -> int:
             return 0, None
 
         # Visit the right subtree first (larger values)
-        count_right, value_right = reverse_inorder_traversal(node.right, k)
+        count_right, value_right = find_kth_largest_recursive(node.right, k)
 
         # If we found the kth largest in the right subtree, return it
         if value_right is not None:
@@ -30,12 +30,14 @@ def find_kth_max(root: Optional[TreeNode], k: int) -> int:
             return current_count, node.data
 
         # Visit the left subtree (smaller values)
-        count_left, value_left = reverse_inorder_traversal(node.left, k - current_count)
+        count_left, value_left = find_kth_largest_recursive(
+            node.left, k - current_count
+        )
         total_count = current_count + count_left
         return total_count, value_left
 
     # Start the reverse in-order traversal from the root
-    _, result = reverse_inorder_traversal(root, k)
+    _, result = find_kth_largest_recursive(root, k)
     return result if result is not None else 0
 
 
