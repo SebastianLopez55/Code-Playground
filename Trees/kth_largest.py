@@ -14,8 +14,12 @@ def find_kth_max(root: Optional[TreeNode], k: int) -> int:
         node: Optional[TreeNode], k: int
     ) -> Tuple[int, Optional[int]]:
         # Base case: if the node is None, return count as 0 and value as None
+
         if not node:
             return 0, None
+        print(
+            f"value of k == {k} before visiting right child from curr node {node.data}."
+        )
 
         # Visit the right subtree first (larger values)
         count_right, value_right = find_kth_largest_recursive(node.right, k)
@@ -28,6 +32,10 @@ def find_kth_max(root: Optional[TreeNode], k: int) -> int:
         current_count = count_right + 1
         if current_count == k:
             return current_count, node.data
+
+        print(
+            f"value of k == {k} before visiting left child from curr node {node.data}."
+        )
 
         # Visit the left subtree (smaller values)
         count_left, value_left = find_kth_largest_recursive(
