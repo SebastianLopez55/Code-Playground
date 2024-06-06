@@ -1,7 +1,6 @@
 from operator import index
 from typing import List
-
-from distutils.command import build
+import random
 
 
 class MinHeap:
@@ -10,7 +9,7 @@ class MinHeap:
         self.items = []
 
     def print_heap(self):
-        print(self.items)
+        print(f"Current state of the Min Heap: {self.items}")
 
     def is_empty(self):
         return self.size == 0
@@ -114,3 +113,8 @@ class MinHeap:
 
 # Example usage
 min_heap = MinHeap()
+for _ in range(10):
+    item = random.randint(1, 20)
+    print(f"Item to be added to heap: {item}")
+    min_heap.insert(item)
+    min_heap.print_heap()
