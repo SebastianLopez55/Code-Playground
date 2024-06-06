@@ -66,7 +66,7 @@ class MinHeap:
         min_item = self._items[0]
         self._items[0] = self._items[self._size - 1]
         self._size -= 1
-        self._bubble_down()
+        self._bubble_down(0)
         return min_item
 
     def insert(self, item: int) -> None:
@@ -74,8 +74,8 @@ class MinHeap:
         self._size += 1
         self._bubble_up()
 
-    def _bubble_down(self) -> None:
-        item_idx = 0
+    def _bubble_down(self, index: int) -> None:
+        item_idx = index
         while self.has_left_child(item_idx):
             smaller_child_idx = self.get_left_child_idx(item_idx)
             if self.has_right_child(item_idx) and self.right_child(
@@ -97,18 +97,17 @@ class MinHeap:
             self._swap(self.get_parent_idx(item_idx), item_idx)
             item_idx = self.get_parent_idx(item_idx)
 
+    def heapify(self, array: List[int]) -> None:
+        self._items = array
+        self._size = len(array)
+        # Start from the last non-leaf node and go up to the root
+        for i in range(self._size // 2 - 1, -1, -1):
+            self._bubble_down(i)
+
 
 # Example usage
 min_heap = MinHeap()
-for _ in range(10):
-    item = random.randint(1, 20)
-    print(f"Item to be added to heap: {item}")
-    min_heap.insert(item)
-    min_heap.print_heap()
-
-print()
-
-for _ in range(5):
-    print(f"Item to be extracted from heap: {min_heap.get_min()}")
-    min_heap.extract_min()
-    min_heap.print_heap()
+random_array = [random.randint(1, 100) for _ in range(10)]
+print(f"Random array: {random_array}")
+min_heap.heapify(random_array)
+min_heap.print_heap()
