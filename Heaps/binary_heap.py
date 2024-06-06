@@ -1,10 +1,16 @@
+from operator import index
 from typing import List
+
+from distutils.command import build
 
 
 class MinHeap:
     def __init__(self) -> None:
         self.size = 0
         self.items = []
+
+    def print_heap(self):
+        print(self.items)
 
     def is_empty(self):
         return self.size == 0
@@ -62,6 +68,36 @@ class MinHeap:
             self.items[idx_two],
             self.items[idx_one],
         )
+
+    def get_min(self):
+        if self.size == 0:
+            raise LookupError()
+        return self.items[0]
+
+    def extract_min(self):
+        if self.size == 0:
+            raise LookupError()
+        min_item = self.items[0]
+        self.items[0] = self.items[self.size - 1]
+        self.size -= 1
+        self._bubble_down()
+        return min_item
+
+    def insert(self, item):
+        self.items.append(item)
+        self.size += 1
+        self._bubble_up()
+
+    def _bubble_down(self):
+        pass
+
+    def _bubble_up(self):
+        item_idx = self.size - 1
+        while (
+            self.has_parent(item_idx) and self.parent(item_idx) > self.items[item_idx]
+        ):
+            self._swap(self.get_parent_idx(item_idx), item_idx)
+            item_idx = self.get_parent_idx(item_idx)
 
 
 # Example usage
