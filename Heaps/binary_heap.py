@@ -89,7 +89,19 @@ class MinHeap:
         self._bubble_up()
 
     def _bubble_down(self):
-        pass
+        item_idx = 0
+        while self.has_left_child(item_idx):
+            smaller_child_idx = self.get_left_child_idx(item_idx)
+            if self.has_right_child(item_idx) and self.right_child(
+                item_idx
+            ) < self.left_child(item_idx):
+                smaller_child_idx = self.get_right_child_idx(item_idx)
+
+            if self.items[item_idx] < self.items[smaller_child_idx]:
+                break
+            else:
+                self._swap(item_idx, smaller_child_idx)
+            item_idx = smaller_child_idx
 
     def _bubble_up(self):
         item_idx = self.size - 1
