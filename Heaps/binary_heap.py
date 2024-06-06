@@ -57,6 +57,12 @@ class MinHeap:
     def parent(self, idx):
         return self.items[self.get_parent_idx(idx)]
 
+    def _swap(self, idx_one, idx_two):
+        self.items[idx_one], self.items[idx_two] = (
+            self.items[idx_two],
+            self.items[idx_one],
+        )
+
 
 # Example usage
 min_heap = MinHeap()
