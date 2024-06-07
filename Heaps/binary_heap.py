@@ -87,7 +87,7 @@ class MinHeap:
                 break
             else:
                 self._swap(item_idx, smaller_child_idx)
-            item_idx = smaller_child_idx
+                item_idx = smaller_child_idx
 
     def _bubble_up(self) -> None:
         item_idx = self._size - 1
