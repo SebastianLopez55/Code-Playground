@@ -57,5 +57,9 @@ def bubble_down(arr, i, n):
     # O(n) total space.
 
 
-lst = [1, 23, -23, -1]
-print(heap_sort(lst))  # -> [-23, -1, 1, 23]
+expected = [-23, -1, 1, 23]
+actual = heap_sort([1, 23, -23, -1])
+
+assert (
+    expected == actual
+), f"Error: we should have gotten {expected}, but we got {actual}."
