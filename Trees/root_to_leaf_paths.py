@@ -32,25 +32,24 @@ tree1 = TreeNode(1, TreeNode(0, TreeNode(4), TreeNode(5)), TreeNode(3))
 
 
 def paths_with_target(root, target):
-
     all_paths = []
 
     def preorder_dfs(root, path):
         if root is None:
             return
 
-        if not root.left and not root.right:
-            all_paths.append(path + [root.val])
-
         path.append(root.val)
+
+        if not root.left and not root.right:
+            all_paths.append(list(path))
 
         if root.left:
             preorder_dfs(root.left, path)
-            path.pop()
 
         if root.right:
             preorder_dfs(root.right, path)
-            path.pop()
+
+        path.pop()
 
     preorder_dfs(root, [])
 
