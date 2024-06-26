@@ -41,7 +41,7 @@ def sum_paths_containing_target1(root, target):
         path.append(root.val)
 
         if not root.left and not root.right:
-            all_paths.append(list(path))
+            all_paths.append(list(path))  # O(len(path)) time.
 
         if root.left:
             preorder_dfs(root.left, path)
@@ -55,8 +55,7 @@ def sum_paths_containing_target1(root, target):
 
     total_sum = 0
     for path in all_paths:
-        path_set = set(path)
-        if target in path_set:
+        if target in path:
             total_sum += sum(path)
 
     return total_sum
@@ -88,6 +87,10 @@ def sum_paths_containing_target2(root, target):
     result = [0]
     dfs(root, [], 0, target, result)
     return result[0]
+
+    # O(n) time.
+    # O(h) -> O(n) auxiliary space.
+    # O(n) total space.
 
 
 def sum_paths_containing_target3(root, target):
