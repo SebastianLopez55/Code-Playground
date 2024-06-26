@@ -1,5 +1,5 @@
-def is_number(char_stg):
-    return char_stg in {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
+def is_number(digit_str):
+    return digit_str in {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 
 
 def extract_sum(string):
@@ -9,15 +9,11 @@ def extract_sum(string):
 
     while i < n:
         temp = ""
-        curr_char = string[i]
         if string[i] == "-" and (i + 1) < n and is_number(string[i + 1]):
-            curr_char = string[i]
             temp += string[i]
-            temp += string[i + 1]
-            i += 2
+            i += 1
 
         while i < n and is_number(string[i]):
-            curr_char = string[i]
             temp += string[i]
             i += 1
 
