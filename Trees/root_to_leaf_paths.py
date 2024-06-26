@@ -116,6 +116,10 @@ def sum_paths_containing_target3(root, target):
     # Start DFS from the root node
     return dfs(root, 0, False)
 
+    # O(n) time.
+    # O(h) -> O(n) auxiliary space.
+    # O(n) total space.
+
 
 assert sum_paths_containing_target3(tree1, 0) == 11, "Failed test 1."
 assert sum_paths_containing_target3(tree1, 5) == 6, "Failed test 2."
