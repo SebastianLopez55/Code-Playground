@@ -31,7 +31,7 @@ class TreeNode:
 tree1 = TreeNode(1, TreeNode(0, TreeNode(4), TreeNode(5)), TreeNode(3))
 
 
-def paths_with_target(root, target):
+def sum_paths_containing_target1(root, target):
     all_paths = []
 
     def preorder_dfs(root, path):
@@ -62,4 +62,63 @@ def paths_with_target(root, target):
     return total_sum
 
 
-print(paths_with_target(tree1, 0))
+def sum_paths_containing_target2(root, target):
+    def dfs(node, current_path, current_sum, target, result):
+        if not node:
+            return
+
+        # Add the current node's value to the path and sum
+        current_path.append(node.val)
+        current_sum += node.val
+
+        # If it's a leaf node
+        if not node.left and not node.right:
+            # If the current path contains the target, add the sum to the result
+            if target in current_path:
+                result[0] += current_sum
+
+        # Continue to traverse the left and right subtrees
+        dfs(node.left, current_path, current_sum, target, result)
+        dfs(node.right, current_path, current_sum, target, result)
+
+        # Backtrack: remove the current node's value from the path and sum
+        current_path.pop()
+        current_sum -= node.val
+
+    result = [0]
+    dfs(root, [], 0, target, result)
+    return result[0]
+
+
+def sum_paths_containing_target3(root, target):
+    def dfs(node, current_sum, target_found):
+        if not node:
+            return 0
+
+        # Update the current path sum
+        current_sum += node.val
+
+        # Check if the target value is in the current path
+        if node.val == target:
+            target_found = True
+
+        # If we reached a leaf node, check if target was found in the path
+        if not node.left and not node.right:
+            return current_sum if target_found else 0
+
+        # Recur for left and right subtrees
+        left_sum = dfs(node.left, current_sum, target_found)
+        right_sum = dfs(node.right, current_sum, target_found)
+
+        # Return the sum of valid paths from both subtrees
+        return left_sum + right_sum
+
+    # Start DFS from the root node
+    return dfs(root, 0, False)
+
+
+assert sum_paths_containing_target3(tree1, 0) == 11, "Failed test 1."
+assert sum_paths_containing_target3(tree1, 5) == 6, "Failed test 2."
+assert sum_paths_containing_target3(tree1, 1) == 15, "Failed test 3."
+
+print("All tests passed!")
