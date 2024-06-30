@@ -51,32 +51,23 @@ UML Diagram: Parking Lot
 
 
 class Vehicle:
-    def __init(self, license_plate):
+    def __init__(self, license_plate):
         self.license_plate = license_plate
 
 
-# class Car(Vehicle):
-#     def __init__(self, size="Medium"):
-#         super().
+class Car(Vehicle):
+    def __init__(self, license_plate, make, model):
+        super().__init__(license_plate)
+        self.make = make
+        self.model = model
 
 
-# class Vehicle:
-#     def __init__(self, license_plate):
-#         self.license_plate = license_plate
+class ParkingSpot:
+    def __init__(self, spot_id):
+        self.spot_id = spot_id
+        self.is_available = True
+        self.vehicle = None
 
-
-# class Car(Vehicle):
-#     def __init__(self, license_plate, make, model):
-#         super().__init__(license_plate)
-#         self.make = make
-#         self.model = model
-
-
-# class ParkingSpot:
-#     def __init__(self, spot_id):
-#         self.spot_id = spot_id
-#         self.is_available = True
-#         self.vehicle = None
 
 #     def park_vehicle(self, vehicle):
 #         if self.is_available:
