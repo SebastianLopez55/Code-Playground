@@ -1,77 +1,138 @@
+"""
+UML Diagram: Parking Lot
+
++--------------------+
+|      Vehicle       |
++--------------------+
+| - license_plate    |
++--------------------+
+| + __init__()       |
++--------------------+
+          ^
+          |
+          |
+       inherits
+          |
++--------------------+
+|        Car         |
++--------------------+
+| - make             |
+| - model            |
++--------------------+
+| + __init__()       |
++--------------------+
+
++--------------------+
+|   ParkingSpot      |
++--------------------+
+| - spot_id          |
+| - is_available     |
+| - vehicle          |
++--------------------+
+| + __init__()       |
+| + park_vehicle()   |
+| + remove_vehicle() |
++--------------------+
+
++--------------------+
+|    ParkingLot      |
++--------------------+
+| - spots            |
++--------------------+
+| + __init__()       |
+| + add_parking_spot()|
+| + park_vehicle()   |
+| + remove_vehicle() |
+| + get_available_spots() |
++--------------------+
+
+
+"""
+
+
 class Vehicle:
-    def __init__(self, license_plate):
+    def __init(self, license_plate):
         self.license_plate = license_plate
 
 
-class ParkingSpot:
-    def __init__(self, spot_id, size="medium"):
-        self.spot_id = spot_id
-        self.size = size
-        self.is_available = True
-        self.vehicle = None
-
-    def park_vehicle(self, vehicle):
-        if self.is_available:
-            self.vehicle = vehicle
-            self.is_available = False
-            print(f"Vehicle {vehicle.license_plate} parked at spot {self.spot_id}.")
-        else:
-            print(f"Spot {self.spot_id} is already occupied.")
-
-    def remove_vehicle(self):
-        if not self.is_available:
-            print(f"Vehicle {self.vehicle.license_plate} left spot {self.spot_id}.")
-            self.vehicle = None
-            self.is_available = True
-        else:
-            print(f"Spot {self.spot_id} is already empty.")
+# class Car(Vehicle):
+#     def __init__(self, size="Medium"):
+#         super().
 
 
-class ParkingLot:
-    def __init__(self):
-        self.spots = {}
-
-    def add_parking_spot(self, spot_id, size="medium"):
-        if spot_id in self.spots:
-            print(f"Spot {spot_id} already exists.")
-        else:
-            self.spots[spot_id] = ParkingSpot(spot_id, size)
-            print(f"Spot {spot_id} added as a {size} spot.")
-
-    def park_vehicle(self, spot_id, vehicle):
-        if spot_id in self.spots:
-            self.spots[spot_id].park_vehicle(vehicle)
-        else:
-            print(f"Spot {spot_id} does not exist.")
-
-    def remove_vehicle(self, spot_id):
-        if spot_id in self.spots:
-            self.spots[spot_id].remove_vehicle()
-        else:
-            print(f"Spot {spot_id} does not exist.")
-
-    def get_available_spots(self):
-        available_spots = [
-            spot_id for spot_id, spot in self.spots.items() if spot.is_available
-        ]
-        return available_spots
+# class Vehicle:
+#     def __init__(self, license_plate):
+#         self.license_plate = license_plate
 
 
-# Example usage
-parking_lot = ParkingLot()
-parking_lot.add_parking_spot("A1", "small")
-parking_lot.add_parking_spot("A2", "medium")
-parking_lot.add_parking_spot("A3", "large")
+# class Car(Vehicle):
+#     def __init__(self, license_plate, make, model):
+#         super().__init__(license_plate)
+#         self.make = make
+#         self.model = model
 
-vehicle1 = Vehicle("ABC123")
-vehicle2 = Vehicle("XYZ789")
 
-parking_lot.park_vehicle("A1", vehicle1)
-parking_lot.park_vehicle("A2", vehicle2)
+# class ParkingSpot:
+#     def __init__(self, spot_id):
+#         self.spot_id = spot_id
+#         self.is_available = True
+#         self.vehicle = None
 
-print("Available spots:", parking_lot.get_available_spots())
+#     def park_vehicle(self, vehicle):
+#         if self.is_available:
+#             self.vehicle = vehicle
+#             self.is_available = False
+#         else:
+#             raise Exception(f"Spot {self.spot_id} is already occupied.")
 
-parking_lot.remove_vehicle("A1")
-parking_lot.remove_vehicle("A2")
+#     def remove_vehicle(self):
+#         if not self.is_available:
+#             self.vehicle = None
+#             self.is_available = True
+#         else:
+#             raise Exception(f"Spot {self.spot_id} is already empty.")
 
-print("Available spots:", parking_lot.get_available_spots())
+
+# class ParkingLot:
+#     def __init__(self):
+#         self.spots = {}
+
+#     def add_parking_spot(self, spot_id):
+#         if spot_id not in self.spots:
+#             self.spots[spot_id] = ParkingSpot(spot_id)
+#         else:
+#             raise Exception(f"Spot {spot_id} already exists.")
+
+#     def park_vehicle(self, spot_id, vehicle):
+#         if spot_id in self.spots:
+#             self.spots[spot_id].park_vehicle(vehicle)
+#         else:
+#             raise Exception(f"Spot {spot_id} does not exist.")
+
+#     def remove_vehicle(self, spot_id):
+#         if spot_id in self.spots:
+#             self.spots[spot_id].remove_vehicle()
+#         else:
+#             raise Exception(f"Spot {spot_id} does not exist.")
+
+#     def get_available_spots(self):
+#         return [spot_id for spot_id, spot in self.spots.items() if spot.is_available]
+
+
+# # Example usage
+# parking_lot = ParkingLot()
+# parking_lot.add_parking_spot("A1")
+# parking_lot.add_parking_spot("A2")
+
+# car1 = Car("ABC123", "Toyota", "Corolla")
+# car2 = Car("XYZ789", "Honda", "Civic")
+
+# parking_lot.park_vehicle("A1", car1)
+# parking_lot.park_vehicle("A2", car2)
+
+# print("Available spots:", parking_lot.get_available_spots())
+
+# parking_lot.remove_vehicle("A1")
+# parking_lot.remove_vehicle("A2")
+
+# print("Available spots:", parking_lot.get_available_spots())
