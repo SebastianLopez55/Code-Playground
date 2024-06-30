@@ -5,8 +5,10 @@ UML Diagram: Parking Lot
 |      Vehicle       |
 +--------------------+
 | - license_plate    |
+| - vehicle_type     |
 +--------------------+
 | + __init__()       |
+| + __str__()        |
 +--------------------+
           ^
           |
@@ -16,8 +18,15 @@ UML Diagram: Parking Lot
 +--------------------+
 |        Car         |
 +--------------------+
-| - make             |
-| - model            |
+| + __init__()       |
++--------------------+
+          ^
+          |
+          |
+       inherits
+          |
++--------------------+
+|    Motorcycle      |
 +--------------------+
 | + __init__()       |
 +--------------------+
@@ -25,11 +34,13 @@ UML Diagram: Parking Lot
 +--------------------+
 |   ParkingSpot      |
 +--------------------+
-| - spot_id          |
-| - is_available     |
+| - spot_number      |
+| - spot_size        |
 | - vehicle          |
 +--------------------+
 | + __init__()       |
+| + is_available()   |
+| + can_fit_vehicle()|
 | + park_vehicle()   |
 | + remove_vehicle() |
 +--------------------+
@@ -40,89 +51,112 @@ UML Diagram: Parking Lot
 | - spots            |
 +--------------------+
 | + __init__()       |
-| + add_parking_spot()|
+| + find_available_spot()|
 | + park_vehicle()   |
 | + remove_vehicle() |
-| + get_available_spots() |
 +--------------------+
-
 
 """
 
 
 class Vehicle:
-    def __init__(self, license_plate):
+    def __init__(self, license_plate, vehicle_type):
         self.license_plate = license_plate
+        self.vehicle_type = vehicle_type
+
+    def __str__(self):
+        return f"{self.vehicle_type} with license plate {self.license_plate}"
 
 
 class Car(Vehicle):
-    def __init__(self, license_plate, make, model):
-        super().__init__(license_plate)
-        self.make = make
-        self.model = model
+    def __init__(self, license_plate):
+        super().__init__(license_plate, "Car")
+
+
+class Motorcycle(Vehicle):
+    def __init__(self, license_plate):
+        super().__init__(license_plate, "Motorcycle")
 
 
 class ParkingSpot:
-    def __init__(self, spot_id):
-        self.spot_id = spot_id
-        self.is_available = True
+    def __init__(self, spot_number, spot_size):
+        self.spot_number = spot_number
+        self.spot_size = spot_size
         self.vehicle = None
 
-    def park_vehicle(self, vehicle):
-        if self.is_available:
-            self.is_available = False
-            self.vehicle = vehicle
-        else:
-            raise Exception(f"Spot {self.spot_id} is already occupied.")
+    def is_available(self):
+        return self.vehicle is None
 
-    def remove_vehicle(self, vehicle):
-        if self.is_available == False:
-            self.is_available = True
-            self.vehicle = None
+    def can_fit_vehicle(self, vehicle):
+        # For simplicity, we assume motorcycle can fit in any spot, and car in car or larger spots
+        if vehicle.vehicle_type == "Motorcycle":
+            return True
+        elif vehicle.vehicle_type == "Car" and self.spot_size == "Car":
+            return True
+        return False
+
+    def park_vehicle(self, vehicle):
+        if self.is_available() and self.can_fit_vehicle(vehicle):
+            self.vehicle = vehicle
+            print(f"Parked {vehicle} at spot {self.spot_number}")
         else:
-            raise Exception(f"Spot {self.spot_id} is already empty.")
+            print(f"Cannot park {vehicle} at spot {self.spot_number}")
+
+    def remove_vehicle(self):
+        if not self.is_available():
+            vehicle = self.vehicle
+            self.vehicle = None
+            print(f"Removed {vehicle} from spot {self.spot_number}")
+            return vehicle
+        else:
+            print(f"Spot {self.spot_number} is already empty")
+            return None
 
 
 class ParkingLot:
-    def __init__(self) -> None:
-        self.spots = {}
+    def __init__(self, num_car_spots, num_motorcycle_spots):
+        self.spots = []
+        self.spots.extend([ParkingSpot(i, "Car") for i in range(1, num_car_spots + 1)])
+        self.spots.extend(
+            [
+                ParkingSpot(i + num_car_spots, "Motorcycle")
+                for i in range(1, num_motorcycle_spots + 1)
+            ]
+        )
 
-    def add_parking_spot(self, parking_spot):
-        if parking_spot.spot_id not in self.spots:
-            self.spots[parking_spot.spot_id] = ParkingSpot(parking_spot.spot_id)
+    def find_available_spot(self, vehicle):
+        for spot in self.spots:
+            if spot.is_available() and spot.can_fit_vehicle(vehicle):
+                return spot
+        return None
+
+    def park_vehicle(self, vehicle):
+        spot = self.find_available_spot(vehicle)
+        if spot:
+            spot.park_vehicle(vehicle)
         else:
-            raise Exception(f"Spot {parking_spot.spot_id} already exists.")
+            print("No available spots for this vehicle")
 
-    def park_vehicle(self, spot_id, vehicle):
-        if spot_id in self.spots:
-            self.spots[spot_id].park_vehicle(vehicle)
-        else:
-            raise Exception(f"Spot {spot_id} does not exist. Need to create spot id.")
-
-    def remove_vehicle(self, spot_id):
-        if spot_id in self.spots:
-            self.spots[spot_id].remove_vehicle()
-        else:
-            raise Exception(f"Spot {spot_id} does not exist.")
-
-    def get_available_spots(self):
-
-        available = [
-            spot_id for spot_id, spot in self.spots.items() if spot.vehicle is None
-        ]
-
-        print(available)
-        return available
+    def remove_vehicle(self, license_plate):
+        for spot in self.spots:
+            if spot.vehicle and spot.vehicle.license_plate == license_plate:
+                spot.remove_vehicle()
+                return
+        print(f"No vehicle with license plate {license_plate} found in the lot")
 
 
-p_spot1 = ParkingSpot("A1")
-p_spot2 = ParkingSpot("A2")
+if __name__ == "__main__":
+    # Example usage
+    parking_lot = ParkingLot(num_car_spots=3, num_motorcycle_spots=2)
 
-p_lot = ParkingLot()
-p_lot.add_parking_spot(p_spot1)
-p_lot.add_parking_spot(p_spot2)
+    car1 = Car("ABC123")
+    car2 = Car("XYZ789")
+    motorcycle1 = Motorcycle("MOTO123")
 
-car1 = Car("ATT891", "Tesla", "2024")
-p_lot.get_available_spots()
-p_lot.park_vehicle("A1", car1)
-p_lot.get_available_spots()
+    parking_lot.park_vehicle(car1)
+    parking_lot.park_vehicle(car2)
+    parking_lot.park_vehicle(motorcycle1)
+
+    parking_lot.remove_vehicle("ABC123")
+    parking_lot.remove_vehicle("XYZ789")
+    parking_lot.remove_vehicle("MOTO123")
