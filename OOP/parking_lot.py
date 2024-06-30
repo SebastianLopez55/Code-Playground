@@ -84,52 +84,45 @@ class ParkingSpot:
 
 
 class ParkingLot:
-    def __init__(
-        self,
-    ) -> None:
-        pass
+    def __init__(self) -> None:
+        self.spots = {}
+
+    def add_parking_spot(self, parking_spot):
+        if parking_spot.spot_id not in self.spots:
+            self.spots[parking_spot.spot_id] = ParkingSpot(parking_spot.spot_id)
+        else:
+            raise Exception(f"Spot {parking_spot.spot_id} already exists.")
+
+    def park_vehicle(self, spot_id, vehicle):
+        if spot_id in self.spots:
+            self.spots[spot_id].park_vehicle(vehicle)
+        else:
+            raise Exception(f"Spot {spot_id} does not exist. Need to create spot id.")
+
+    def remove_vehicle(self, spot_id):
+        if spot_id in self.spots:
+            self.spots[spot_id].remove_vehicle()
+        else:
+            raise Exception(f"Spot {spot_id} does not exist.")
+
+    def get_available_spots(self):
+
+        available = [
+            spot_id for spot_id, spot in self.spots.items() if spot.vehicle is None
+        ]
+
+        print(available)
+        return available
 
 
-# class ParkingLot:
-#     def __init__(self):
-#         self.spots = {}
+p_spot1 = ParkingSpot("A1")
+p_spot2 = ParkingSpot("A2")
 
-#     def add_parking_spot(self, spot_id):
-#         if spot_id not in self.spots:
-#             self.spots[spot_id] = ParkingSpot(spot_id)
-#         else:
-#             raise Exception(f"Spot {spot_id} already exists.")
+p_lot = ParkingLot()
+p_lot.add_parking_spot(p_spot1)
+p_lot.add_parking_spot(p_spot2)
 
-#     def park_vehicle(self, spot_id, vehicle):
-#         if spot_id in self.spots:
-#             self.spots[spot_id].park_vehicle(vehicle)
-#         else:
-#             raise Exception(f"Spot {spot_id} does not exist.")
-
-#     def remove_vehicle(self, spot_id):
-#         if spot_id in self.spots:
-#             self.spots[spot_id].remove_vehicle()
-#         else:
-#             raise Exception(f"Spot {spot_id} does not exist.")
-
-#     def get_available_spots(self):
-#         return [spot_id for spot_id, spot in self.spots.items() if spot.is_available]
-
-
-# # Example usage
-# parking_lot = ParkingLot()
-# parking_lot.add_parking_spot("A1")
-# parking_lot.add_parking_spot("A2")
-
-# car1 = Car("ABC123", "Toyota", "Corolla")
-# car2 = Car("XYZ789", "Honda", "Civic")
-
-# parking_lot.park_vehicle("A1", car1)
-# parking_lot.park_vehicle("A2", car2)
-
-# print("Available spots:", parking_lot.get_available_spots())
-
-# parking_lot.remove_vehicle("A1")
-# parking_lot.remove_vehicle("A2")
-
-# print("Available spots:", parking_lot.get_available_spots())
+car1 = Car("ATT891", "Tesla", "2024")
+p_lot.get_available_spots()
+p_lot.park_vehicle("A1", car1)
+p_lot.get_available_spots()
