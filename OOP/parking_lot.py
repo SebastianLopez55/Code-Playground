@@ -68,20 +68,26 @@ class ParkingSpot:
         self.is_available = True
         self.vehicle = None
 
+    def park_vehicle(self, vehicle):
+        if self.is_available:
+            self.is_available = False
+            self.vehicle = vehicle
+        else:
+            raise Exception(f"Spot {self.spot_id} is already occupied.")
 
-#     def park_vehicle(self, vehicle):
-#         if self.is_available:
-#             self.vehicle = vehicle
-#             self.is_available = False
-#         else:
-#             raise Exception(f"Spot {self.spot_id} is already occupied.")
+    def remove_vehicle(self, vehicle):
+        if self.is_available == False:
+            self.is_available = True
+            self.vehicle = None
+        else:
+            raise Exception(f"Spot {self.spot_id} is already empty.")
 
-#     def remove_vehicle(self):
-#         if not self.is_available:
-#             self.vehicle = None
-#             self.is_available = True
-#         else:
-#             raise Exception(f"Spot {self.spot_id} is already empty.")
+
+class ParkingLot:
+    def __init__(
+        self,
+    ) -> None:
+        pass
 
 
 # class ParkingLot:
