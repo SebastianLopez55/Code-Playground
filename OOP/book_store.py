@@ -1,87 +1,115 @@
 """
-Book
-    > pages: List[str]
 
-    write()
+UML Diagram
+-------------
+|   Book    |
+|-----------|
+| - title: str
+| - author: str
+| - isbn: str
+|-----------|
+| + __str__(): str
+-------------
 
-Library
-    > book_collection : {id : [Book(), rented bool]}
-    > rented_book bool
-    > book_count int
 
-    add_books()
-    rent_books()
-    is_rented()
-
+-------------
+|  Library  |
+|-----------|
+| - books: dict<isbn, Book>
+| - rented_books: dict<isbn, Book>
+|-----------|
+| + add_book(book: Book): bool
+| + remove_book(isbn: str): bool
+| + rent_book(isbn: str): bool
+| + return_book(isbn: str): bool
+| + list_books(): list<str>
+| + list_rented_books(): list<str>
 
 """
 
 
 class Book:
-    def __init__(self, page_count, book_title) -> None:
-        self.book_title = book_title
-        self.page_count = page_count
-        self.pages = (page_count + 1) * [" "]
+    def __init__(self, title, author, isbn):
+        self.title = title
+        self.author = author
+        self.isbn = isbn
 
-    def write(self, page, content):
-        self.pages[page] = content
-        print(f'Just wrote "{content}" to book. ')
+    def __str__(self):
+        return f"{self.title} by {self.author} (ISBN: {self.isbn})"
 
 
 class Library:
-    def __init__(self) -> None:
-        self.book_collection = dict()
-        self.book_count = 0
+    def __init__(self):
+        self.books = {}
+        self.rented_books = {}
 
-    def add_book(self, book, book_id):
-        if book_id not in self.book_collection:
-            self.book_collection[book_id] = [book, False]
-            self.book_count += 1
-            print(f'Book "{book.book_title}" added to library.')
+    def add_book(self, book):
+        if book.isbn not in self.books:
+            self.books[book.isbn] = book
+            return True
+        return False
 
-    def is_rented(self, book_id):
-        if book_id not in self.book_collection:
-            print(f"Book with id {book_id} not in collection.")
+    def remove_book(self, isbn):
+        if isbn in self.books:
+            if isbn in self.rented_books:
+                del self.rented_books[isbn]
+            del self.books[isbn]
+            return True
+        return False
 
-        return self.book_collection[book_id][1]
+    def rent_book(self, isbn):
+        if isbn in self.books and isbn not in self.rented_books:
+            self.rented_books[isbn] = self.books[isbn]
+            return True
+        return False
 
-    def rent_book(self, book_id):
-        if not self.is_rented(book_id):
-            book_info = self.book_collection[book_id]
-            book_info[1] = True
-            return book_info[0]
+    def return_book(self, isbn):
+        if isbn in self.rented_books:
+            del self.rented_books[isbn]
+            return True
+        return False
 
-    def book_catalog(self):
-        print("Book Catalog: ")
-        for book_id, book_info in self.book_collection.items():
-            print(
-                f'Book with id "{book_id}" and title "{book_info[0].book_title}" is available: {not self.is_rented(book_id)}'
-            )
+    def list_books(self):
+        return [str(book) for book in self.books.values()]
 
-
-# Book 1
-def book_factory(title, pages, content):
-    book = Book(pages, title)
-    for i in range(1, pages + 1):
-        book.write(i, content)
-    return book
+    def list_rented_books(self):
+        return [str(book) for book in self.rented_books.values()]
 
 
-book1 = book_factory("Harry Potter Summary", 5, "bla bla bla bla")
-book2 = book_factory("Bed Stories", 4, "Sleep story ...")
+# Example usage:
+library = Library()
 
-lib = Library()
-lib.add_book(book1, "A43")
-lib.add_book(book2, "A76")
+# Adding books to the library
+book1 = Book("The Great Gatsby", "F. Scott Fitzgerald", "1234567890")
+book2 = Book("1984", "George Orwell", "1234567891")
+library.add_book(book1)
+library.add_book(book2)
 
-print(lib.is_rented("A43"))
-print(lib.is_rented("A76"))
+# Listing books
+print("Books in library:")
+for book in library.list_books():
+    print(book)
 
-lib.book_catalog()
+# Renting a book
+library.rent_book("1234567890")
 
-result = lib.rent_book("A43")
-if result:
-    print(result.book_title)
+# Listing books after renting one
+print("\nBooks in library after renting 'The Great Gatsby':")
+for book in library.list_books():
+    print(book)
 
-print(lib.is_rented("A43"))
-lib.book_catalog()
+print("\nRented books:")
+for book in library.list_rented_books():
+    print(book)
+
+# Returning a book
+library.return_book("1234567890")
+
+# Listing books after returning one
+print("\nBooks in library after returning 'The Great Gatsby':")
+for book in library.list_books():
+    print(book)
+
+print("\nRented books:")
+for book in library.list_rented_books():
+    print(book)
