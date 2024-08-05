@@ -30,7 +30,19 @@ def rotate_array(nums, k):
     # O(n) total space.
 
 
-nums = [1, 2, 3, 4, 5, 6, 7]
-k = 3
+def rotate_array2(nums, k):
+    n = len(nums)
+    k %= n
+    nums_reversed = nums[::-1]
+    return nums_reversed[-n - 1 + k : -n - 1 : -1] + nums_reversed[-1 : -n - 1 + k : -1]
+
+    # O(n) time.
+    # O(n) space.
+    # O(n) total space.
+
+
+nums = [1, 2, 3, 4, 5]
+k = 2
 
 print(rotate_array(nums, k))
+print(rotate_array2(nums, k))
